@@ -21,6 +21,15 @@ class Product_model extends CI_Model {
 	{
 		
 	}
+	public function getbackend(){
+		$sql = "SELECT * from product";
+		$query = $this->db->query($sql);
+		if ($query->num_rows() > 0) {
+            return $query;
+        }else{
+            return "false"; 
+        }
 
+	}
 	
 }

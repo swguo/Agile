@@ -23,7 +23,7 @@
 		</button>
 		<div style="cursor:pointer">
 			<a href="<?=site_url('home/index')?>">
-				<img src="<?=base_url('assets/images/logo.png')?>" style="max-height: 40px;padding:5px 0 0 10px;">
+				
 			</a>
 		</div>
 	</div>
