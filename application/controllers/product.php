@@ -8,13 +8,12 @@ class Product extends CI_Controller {
 	}
 
 	// 產品介紹-前台
-	public function index()
-	{	
-			//$this->load->view('header');
-			$this->load->view('product/index');
-			//$this->load->view('footer');		
+	public function index() {	
+		$result = $this->product_model->getbackend();
+		$this->load->view('header');
+		$this->load->view('product/index', array("result"=>$result));
+		$this->load->view('footer');		
 	}
-	// 產品介紹-後台
 	public function backIndex()
 	{		
 		$result = $this->product_model->getbackend();

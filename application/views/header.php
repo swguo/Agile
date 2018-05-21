@@ -117,7 +117,7 @@
 								</a>
 								<ul class="menu" style="width:240px;">
 									<li><a href="<?=site_url('product/index')?>">產品介紹</a></li>
-									<li><a href="<?=site_url('product/batch')?>">原料購買</a></li>
+									<li><a href="<?=site_url('material/batchex')?>">原料購買</a></li>
 								</ul>
 							</li>
 							<li class="mainmenu">
