@@ -21,4 +21,19 @@ class Product extends CI_Controller {
 		$this->load->view('back_header');
 		$this->load->view('product/b_index',array("result"=>$result));
 	}
+	// 批次購買
+	public function batch()
+	{
+		$data = $this->product_model->get_product();
+		$this->load->view('header');
+		$this->load->view('product/batch',array('data' => $data));
+		$this->load->view('footer');
+	}
+	public function batchex()
+	{
+		$data = $this->product_model->get_product();
+		$this->load->view('header');
+		$this->load->view('product/batchex',array('data' => $data));
+		$this->load->view('footer');
+	}
 }
