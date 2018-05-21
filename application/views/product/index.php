@@ -58,7 +58,7 @@
       <div class="row">
         <div class="col-md-7">
           <a href="#">
-            <img class="img-fluid rounded mb-3 mb-md-0" src=<?="../".$value->img ?> width="640px" alt="">
+            <img class="img-fluid rounded mb-3 mb-md-0" src=<?=base_url($value->img) ?> width="640px" alt="">
           </a>
         </div>
 
