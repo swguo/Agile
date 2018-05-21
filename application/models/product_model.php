@@ -8,126 +8,89 @@ class Product_model extends CI_Model {
 		$this->load->database();
 	}
 
-	//取得所有
-	public function get_product($id = "")
+	
+	public function get($id = "")
 	{
-		if($id == ""){
-			$this->db->select('*');
-			$this->db->from('product');
-			$this->db->order_by('product.id', 'desc');
-			$query = $this->db->get();
+		$sql = "SELECT * from product";
+		$query = $this->db->query($sql);
+		if ($query->num_rows() > 0) {
+            return $query;
+        }else{
+            return "false"; 
+        }
+	}
+	public function add($obj){
+		//$sql = "INSERT INTO product (name,name_en,note,note_en,price,img,buyLink) VALUES (?,?,?,?,?,?,?)";
+		$data = array("name"=>$obj['name'],
+					"name_en"=>$obj['name_en'],
+					"note"=>$obj['note'],
+					"note_en"=>$obj['note_en'],
+					"price"=>$obj['price'],
+					"img"=>$obj['img'],
+					"buyLink"=>$obj['buyLink']);
+
+		$this->db->insert("product",$data);
+		//$query = $this->db->query($sql,	);
+		if($this->db->insert_id()>0){
+			return true;
 		}else{
-			$query = $this->db->get_where('product', array('id' => $id));
+			return false;
 		}
-
-		return $query;
 	}
-
-	//
-	public function insert_product($name,$note,$price,$safety_stock,$img,$buyLink,$name_en,$note_en)
+	public function update($obj)
 	{
-
-		$data = array(
-			'name' => $name,
-			'note' => $note,
-			'price' => $price,
-			'safety_stock' => $safety_stock,
-			'img' => $img,
-			'buyLink' => $buyLink,
-			'name_en' => $name_en,
-			'note_en' => $note_en,
-			);
-
-		$query= $this->db->insert('product', $data);	
-
-		//判斷insert是否成功
-		if($query == TRUE){
-			return TRUE;
-		} else{
-			return FALSE;
-		}
-	}
-
-	//更新資料
-	public function update_product($id,$name,$note,$price,$safety_stock,$buyLink,$name_en,$note_en,$img=""){
-
-		if($img==""){
-			$data = array(
-				'name' => $name,
-				'note' => $note,
-				'price' => $price,
-				'safety_stock' => $safety_stock,
-				'buyLink' => $buyLink,
-				'name_en' => $name_en,
-				'note_en' => $note_en,
-				);
+		if(!empty($obj['img'])){
+			$data = array("name"=>$obj['name'],
+					"name_en"=>$obj['name_en'],
+					"note"=>$obj['note'],
+					"note_en"=>$obj['note_en'],
+					"price"=>$obj['price'],
+					"img"=>$obj['img'],
+					"buyLink"=>$obj['buyLink']);
 		}else{
-			$data = array(
-				'name' => $name,
-				'note' => $note,
-				'price' => $price,
-				'safety_stock' => $safety_stock,
-				'buyLink' => $buyLink,
-				'name_en' => $name_en,
-				'note_en' => $note_en,
-				'img' => $img
-				);
+			$data = array("name"=>$obj['name'],
+					"name_en"=>$obj['name_en'],
+					"note"=>$obj['note'],
+					"note_en"=>$obj['note_en'],
+					"price"=>$obj['price'],					
+					"buyLink"=>$obj['buyLink']);
 		}
 
-		$this->db->where('id', $id);
+		$this->db->where('id', $obj["id"]);
 		$this->db->update('product', $data); 
+		if ($this->db->affected_rows() > 0) {
+            return true;
+        }else{
+            return false; 
+        }
+	}
+	public function getbyid($id=1){
+		$sql = "SELECT * from product where id = ? ";
+		$query = $this->db->query($sql,array($id));
+		if ($query->num_rows() > 0) {
+            return $query;
+        }else{
+            return "false"; 
+        }
+	}
+	public function delete($obj){
+		$sql = "DELETE from product where id = ? ";
+		$query = $this->db->query($sql,array($obj["id"]));
+		if ($this->db->affected_rows() > 0) {
+            return true;
+        }else{
+            return false; 
+        }
+	}
+	public function getbackend(){
+		$sql = "SELECT * from product";
+		$query = $this->db->query($sql);
+		if ($query->num_rows() > 0) {
+            return $query;
+        }else{
+            return "false"; 
+        }
 
 	}
-
-	//刪除資料
-	public function delete_product($id)
-	{
-		$this->db->delete('product',array('id'=>$id));		
-	}
-
-	public function insert_orderForm($id,$name,$email,$phone,$address,$note)
-	{
-
-		$data = array(
-			'id' => $id,
-			'name' => $name,
-			'email' => $email,
-			'phone' => $phone,
-			'address' => $address,
-			'note' => $note,
-			);
-
-		$query= $this->db->insert('orderform', $data);	
-
-		if($query == TRUE){
-			return TRUE;
-		} else{
-			return FALSE;
-		}
-	}
-
-	public function insert_material($orderForm_id,$product_id,$quantity)
-	{
-		$data = array(
-			'orderForm_id' => $orderForm_id,
-			'product_id' => $product_id,
-			'quantity' => $quantity,
-			);
-
-		$query= $this->db->insert('crush_material', $data);	
-
-		if($query == TRUE){
-			return TRUE;
-		} else{
-			return FALSE;
-		}
-	}
-	public function set_stock($id,$stock){
-		$data = array(
-			'stock' => $stock,
-			);
-
-		$this->db->where('id', $id);
-		$this->db->update('product', $data); 
-	}
+	
 }

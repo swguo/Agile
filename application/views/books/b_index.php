@@ -1,6 +1,15 @@
 <h1>後台-產品管理</h1>
 <hr>
 <div class="row">
+	<div class="col-md-2">
+		<a href="add" class="btn btn-success">新增</a>
+	</div>
+	<div class="col-md-10">
+
+	</div>
+</div>
+<div class="row">
+	
 	<div class="col-md-8">
 <table class="table">
 <tr>	
@@ -17,7 +26,7 @@
 	foreach ($result->result() as $key=>$value) {		
 	?>
 	<tr>
-		<td><?php echo $key+1; ?></td>
+		<td><?php echo $key; ?></td>
 		<td><?php echo $value->name; ?></td>
 		<td><?php echo $value->price; ?>元</td>
 		<td><button type="button" class="glyphicon glyphicon-th" data-toggle="modal" data-target=<?="#my".$value->id ?>>
@@ -29,7 +38,7 @@
 <?php
 	}
 ?>
-<a href="add" class="btn btn-success">新增</a>
+
 </table>
 	</div>
 	</div>
