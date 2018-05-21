@@ -1,38 +1,48 @@
 <h1>後台-產品管理</h1>
 <hr>
+
 <div class="row">
 	<div class="col-md-8">
-<table class="table">
-<tr>	
-	<td>#</td>
-	<td>產品名稱</td>
-	<td>價格</td>
-	<td>詳細</td>
-	<td>管理</td>
-	<td></td>
-</tr>
-<?php
-	//print_r($result->result());
+		<div class="row">
+			<div class="col-md-2">
+				<a href="add" class="btn btn-success">新增</a>
+			</div>	
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+			<table class="table">
+			<tr>	
+				<td>#</td>
+				<td>產品名稱</td>
+				<td>價格</td>
+				<td>詳細</td>
+				<td>管理</td>
+				<td></td>
+			</tr>
+			<?php
+				//print_r($result->result());
 
-	foreach ($result->result() as $key=>$value) {		
-	?>
-	<tr>
-		<td><?php echo $key+1; ?></td>
-		<td><?php echo $value->name; ?></td>
-		<td><?php echo $value->price; ?>元</td>
-		<td><button type="button" class="glyphicon glyphicon-th" data-toggle="modal" data-target=<?="#my".$value->id ?>>
-		</button></td>
-		<td><a href=<?='edit/'.$value->id ?> class="btn btn-primary">編輯</a></td>
-		<td><a href=<?='del/'.$value->id?>  class="btn btn-danger">刪除</a></td>
+				foreach ($result->result() as $key=>$value) {		
+				?>
+				<tr>
+					<td><?php echo $key+1; ?></td>
+					<td><?php echo $value->name; ?></td>
+					<td><?php echo $value->price; ?>元</td>
+					<td><button type="button" class="glyphicon glyphicon-th" data-toggle="modal" data-target=<?="#my".$value->id ?>>
+					</button></td>
+					<td><a href=<?='edit/'.$value->id ?> class="btn btn-primary">編輯</a></td>
+					<td><a href=<?='del/'.$value->id?>  class="btn btn-danger">刪除</a></td>
 
-	</tr>
-<?php
-	}
-?>
+				</tr>
+			<?php
+				}
+			?>
 
-</table>
+			</table>
+			</div>
+		</div>
 	</div>
-	</div>
+</div>
 	<?php
 	foreach ($result->result() as $key=>$value) {		
 	?>
