@@ -23,7 +23,7 @@
 	<link rel="stylesheet" href="<?=base_url('assets/css/font.css')?>">
 	<link rel="stylesheet" href="<?=base_url('assets/css/customer.css')?>">
 	
-
+	<script type="text/javascript" src="<?=base_url("assets/js/tinymce/tinymce.min.js")?>"></script>
 </head>
 <body>
 

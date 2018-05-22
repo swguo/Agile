@@ -40,16 +40,16 @@ class Product extends CI_Controller {
 
 		$config['upload_path'] = './assets/uploads/product';
 		$config['allowed_types'] = 'gif|jpg|png';
-		$config['max_size']	= '100';
-		$config['max_width']  = '1024';
-		$config['max_height']  = '768';
+		//$config['max_size']	= '100';
+		//$config['max_width']  = '1024';
+		//$config['max_height']  = '768';
 
 		$this->load->library('upload',$config);
 
 		if (!$this->upload->do_upload())
 		{
-			$error = array('error' => $this->upload->display_errors());
-			print_r($error);			
+			//$error = array('error' => $this->upload->display_errors());
+			//print_r($error);			
 			$obj = array(
 				'id'=>$id,
 				'name'=>$name,
@@ -63,7 +63,8 @@ class Product extends CI_Controller {
 			if( $this->product_model->update($obj) !=false){
 				redirect('product/backIndex');
 			}else{
-				echo $this->db->last_query();
+				redirect('product/backIndex');
+				//echo $this->db->last_query();
 			}
 		}
 		else
@@ -119,17 +120,18 @@ class Product extends CI_Controller {
 
 		$config['upload_path'] = './assets/uploads/product';
 		$config['allowed_types'] = 'gif|jpg|png';
-		$config['max_size']	= '100';
-		$config['max_width']  = '1024';
-		$config['max_height']  = '768';
+		//$config['max_size']	= '100';
+		//$config['max_width']  = '1024';
+		//$config['max_height']  = '768';
 
 		$this->load->library('upload',$config);
 
 		if (!$this->upload->do_upload())
 		{
-			$error = array('error' => $this->upload->display_errors());
-			print_r($error);			
+			//$error = array('error' => $this->upload->display_errors());
+			//print_r($error);			
 			//$this->load->view('upload_form'，$error);
+			$img= "assets/uploads/product/Desert.jpg";
 			$obj = array(
 				'name'=>$name,
 				'name_en'=>$name_en,
@@ -139,7 +141,11 @@ class Product extends CI_Controller {
 				'buyLink'=>$buyLink,
 				'img'=>$img
 			);
-			print_r($obj);
+			if( $this->product_model->add($obj) !=false){
+				redirect('product/backIndex');
+			}else{
+				echo $this->db->last_query();
+			}
 		}
 		else
 		{

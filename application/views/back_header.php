@@ -12,6 +12,7 @@
 
 	<link rel='stylesheet' type='text/css' href='<?=base_url('assets/css/customer.css');?>' media='all'>
 	<link rel='stylesheet' type='text/css' href='<?=base_url('assets/css/font.css');?>' media='all'>
+	<script type="text/javascript" src="<?=base_url("assets/js/tinymce/tinymce.min.js")?>"></script>
 </head>
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="navbar-header">

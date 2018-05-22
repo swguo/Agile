@@ -1,6 +1,15 @@
 <h1>後台-產品管理</h1>
 <hr>
+<script type="text/javascript">
+	 function deletefun(url){
+						if(confirm('確定要刪除嗎?')){
+							document.location.href="<?=site_url('product/del')?>"+"/"+url;
+						}else{
+							return false;
+						}
+					}
 
+</script>
 <div class="row">
 	<div class="col-md-8">
 		<div class="row">
@@ -31,7 +40,7 @@
 					<td><button type="button" class="glyphicon glyphicon-th" data-toggle="modal" data-target=<?="#my".$value->id ?>>
 					</button></td>
 					<td><a href=<?='edit/'.$value->id ?> class="btn btn-primary">編輯</a></td>
-					<td><a href=<?='del/'.$value->id?>  class="btn btn-danger">刪除</a></td>
+					<td><button type="button" class="btn btn-danger" onClick="deletefun(<?=$value->id?>)">刪除</button></td>
 
 				</tr>
 			<?php
