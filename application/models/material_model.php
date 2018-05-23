@@ -8,7 +8,7 @@ class Material_model extends CI_Model {
 		$this->load->database();
 	}
 
-	//å–å¾—æ‰€æœ‰
+	//?–å??€??
 	public function get_orderForm($id = "")
 	{
 		if($id == ""){
@@ -47,9 +47,35 @@ class Material_model extends CI_Model {
 
 		return $data;
 	}
+ 
+  public function get_filted_order($filter){
+      $endTime = '' != $filter['endTime'] ? $filter['endTime'] : "9999-12-31T23:59";
+      
+      $sql = "SELECT * FROM `orderform` WHERE `name` like '%{$filter['name']}%' AND `is_delete` <> '{$filter['shipped']}' AND `date` > '{$filter['startTime']}' AND `date` < '{$endTime}'";
+      $query = $this->db->query($sql);
+      
+      if($query->num_rows() > 0){
+				foreach ($query->result() as $key => $row) {
+					$data[$row->id]['id'] = $row->id;
+					$data[$row->id]['name'] = $row->name;
+					$data[$row->id]['email'] = $row->email;
+					$data[$row->id]['phone'] = $row->phone;
+					$data[$row->id]['address'] = $row->address;
+					$data[$row->id]['note'] = $row->note;
+					$data[$row->id]['is_delete'] = $row->is_delete;
+					$data[$row->id]['date'] = $row->date;
+					
+					$data[$row->id]['data'] = $this->get_material($row->id)->result();
+				}			
+		  }else{
+        return false;
+      } 
+      return $data;
+  }
+ 
 	public function get_material($id = "")
 	{
-		$query = $this->db->query('SELECT c.id,orderForm_id,product_id,quantity,name,price,safety_stock FROM `crush_material` as c INNER JOIN `product` as p ON c.`product_id` = p.`id` WHERE `orderForm_id` = "'.$id.'"');
+		$query = $this->db->query('SELECT c.id,orderForm_id,product_id,quantity,name,price FROM `crush_material` as c INNER JOIN `product` as p ON c.`product_id` = p.`id` WHERE `orderForm_id` = "'.$id.'"');
 
 		return $query;
 	}
@@ -94,4 +120,9 @@ class Material_model extends CI_Model {
 		}else 
 		return FALSE;
 	}
+  public function shipping($id=""){
+    $sql = 'UPDATE `orderform` SET `is_delete`=not`is_delete` WHERE `id`="'.$id.'"';
+		$query = $this->db->query($sql);
+		return $query;
+  }
 }
