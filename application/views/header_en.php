@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>金衣生命科學股份有限公司</title>
+	<title>保你健康股份有限公司</title>
 	<!-- jQuery -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 	<script src="<?=base_url('assets/js/jquery.min.js')?>"></script>
