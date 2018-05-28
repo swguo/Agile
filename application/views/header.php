@@ -3,9 +3,10 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>金衣生命科學股份有限公司</title>
+	<title>Title</title>
 	<!-- jQuery -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="<?=base_url('assets/js/jquery.min.js')?>"></script>
 	<!-- Modernizr JS -->
 	<script src="<?=base_url('assets/js/modernizr-2.6.2.min.js')?>"></script>
@@ -22,11 +23,84 @@
 	<link rel="stylesheet" href="<?=base_url('assets/css/style.css')?>">
 	<link rel="stylesheet" href="<?=base_url('assets/css/font.css')?>">
 	<link rel="stylesheet" href="<?=base_url('assets/css/customer.css')?>">
-	
-
+	<script type="text/javascript" src="<?=base_url("assets/js/tinymce/tinymce.min.js")?>"></script>
+	<!--Switch Button CSS Setting-->
+	<style>
+		.testswitch{  
+			position: relative;
+			float: left;
+			width: 90px;
+			margin: 0;
+			-webkit-user-select:none;
+			-moz-user-select:none;
+			-ms-user-select: none;
+		}
+		.testswitch-checkbox{  
+			display: none;
+		}
+		.testswitch-label{
+			display: block;
+			overflow: hidden;
+			cursor: pointer;
+			border: 2px solid #999999;
+			border-radius: 20px;
+		}
+		.testswitch-inner{
+			display: block;
+			width: 200%;
+			margin-left: -100%;
+			transition: margin 0.3s ease-in 0s;
+		}
+		.testswitch-inner::before, .testswitch-inner::after{
+			display: block;
+			float: right;
+			width: 50%;
+			height: 30px;
+			padding: 0;
+			line-height: 30px;
+			font-size: 14px;
+			color: white;
+			font-family:
+			Trebuchet, Arial, sans-serif;
+			font-weight: bold;
+			box-sizing: border-box;
+		}
+		.testswitch-inner::after{  
+			content: attr(data-on);
+			padding-left: 20px;
+			background-color: #00e500;
+			color: #FFFFFF;
+		}  
+		.testswitch-inner::before{  
+			content: attr(data-off);
+			padding-right: 8px;
+			background-color: #EEEEEE;
+			color: #999999;
+			text-align: right;
+		}  
+		.testswitch-switch{  
+			position: absolute;
+			display: block;
+			width: 22px;
+			height: 22px;
+			margin: 4px;
+			background: #FFFFFF;
+			top: 12px;
+			bottom: 0;
+			right: 56px;
+			border: 2px solid #999999;
+			border-radius: 20px;
+			transition: all 0.3s ease-in 0s;
+		}
+		.testswitch-checkbox:checked + .testswitch-label .testswitch-inner{  
+			margin-left: 0;
+		}  
+		.testswitch-checkbox:checked + .testswitch-label .testswitch-switch{  
+			right: 0px;
+		}
+	</style>
 </head>
 <body>
-
 	<header id="fh5co-header" role="banner">
 		<!-- mobile -->
 		<nav class="navbar navbar-default" role="navigation" id="mobile_nav">
@@ -38,39 +112,16 @@
 				<div id="fh5co-navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-right">
 						<li>
-							<a href="<?=site_url('about/index')?>">
-								<span>關於金衣<span class="border"></span></span>
-							</a>
-						</li>
-						<li>
-							<a href="<?=site_url('news/index')?>">
-								<span>最新消息<span class="border"></span></span>
-							</a>
-						</li>
-						<li>
 							<a href="<?=site_url('product/index')?>">
-								<span>產品資訊<span class="border"></span></span>
+								<span>產品介紹<span class="border"></span></span>
 							</a>
 						</li>
 						<li>
-							<a href="<?=site_url('service/index')?>">
-								<span>服務資訊<span class="border"></span></span>
+							<a herf="<?=site_url('material/index')?>">
+								<span>批次購買<span class="border"></span></span>
 							</a>
 						</li>
 						<li>
-							<a href="<?=site_url('hr/recruitment')?>">
-								<span>人力資源<span class="border"></span></span>
-							</a>
-						</li>
-						<li>
-							<a href="<?=site_url('contact/contactme')?>">
-								<span>聯絡我們<span class="border"></span></span>
-							</a>
-						</li>
-						<li>
-							<a href="#" class="tren">
-								<span>English<span class="border"></span></span>
-							</a>
 						</li>
 					</ul>
 				</div>
@@ -87,93 +138,35 @@
 					<div id="fh5co-navbar" class="navbar-collapse collapse">
 						<ul class="nav navbar-nav navbar-right">
 							<li class="mainmenu">
-								<a href="<?=site_url('about/index')?>">
-									<span>關於金衣<span class="border"></span></span>
-									<span class="triangle"></span>
-								</a>
-								<ul class="menu" style="width:470px;">
-									<li><a href="<?=site_url('about/index')?>">公司簡介</a></li>
-									<li><a href="<?=site_url('about/history')?>">發展沿革</a></li>
-									<li><a href="<?=site_url('about/organization')?>">公司組織</a></li>									
-									<li><a href="<?=site_url('about/patent')?>">得獎專利</a></li>
-								</ul>
-							</li>
-							<li class="mainmenu">
-								<a href="<?=site_url('news/index')?>">
-									<span>最新消息<span class="border"></span></span>
-									<span class="triangle"></span>
-								</a>
-								<ul class="menu" style="width:470px;">
-									<li><a href="<?=site_url('news/index')?>">最新消息</a></li>
-									<li><a href="<?=site_url('news/history')?>">歷史消息</a></li>
-									<li><a href="<?=site_url('news/promotion')?>">產品促銷</a></li>
-									<li><a href="<?=site_url('photo/index')?>">活動花絮</a></li>
-								</ul>
-							</li>
-							<li class="mainmenu">
 								<a href="<?=site_url('product/index')?>">
-									<span>產品資訊<span class="border"></span></span>
+									<span>產品介紹<span class="border"></span></span>
 									<span class="triangle"></span>
 								</a>
-								<ul class="menu" style="width:240px;">
-									<li><a href="<?=site_url('product/index')?>">產品介紹</a></li>
-									<li><a href="<?=site_url('material/batchex')?>">原料購買</a></li>
-								</ul>
 							</li>
 							<li class="mainmenu">
-								<a href="<?=site_url('service/index')?>">
-									<span>服務資訊<span class="border"></span></span>
+								<a href="<?=site_url('material/index')?>">
+									<span>批次購買<span class="border"></span></span>
 									<span class="triangle"></span>
 								</a>
-								<ul class="menu" style="width:240px;">
-									<li><a href="<?=site_url('service/index')?>">顧客服務</a></li>
-									<li><a href="<?=site_url('service/advisory')?>">健康諮詢</a></li>
-								</ul>
 							</li>
-							
-							<li class="mainmenu">
-								<a href="<?=site_url('hr/recruitment')?>">
-									<span>人力資源<span class="border"></span></span>
-								</a>
-								<ul class="menu" style="width:360px;">
-									<li><a href="<?=site_url('hr/recruitment#hr1')?>">公司福利</a></li>
-									<li><a href="<?=site_url('hr/recruitment#hr2')?>">工作機會</a></li>
-									<li><a href="<?=site_url('hr/recruitment#hr3')?>">交通資訊</a></li>
-								</ul>
-							</li>
-							<li class="mainmenu">
-								<a href="<?=site_url('contact/contactme')?>">
-									<span>聯絡我們<span class="border"></span></span>
-									<span class="triangle"></span>
-								</a>
-								<ul class="menu" style="width:240px;">
-									<li><a href="<?=site_url('contact/contactme')?>">聯絡我們</a></li>
-									<li><a href="<?=site_url('contact/traffic')?>">交通資訊</a></li>
-								</ul>
-							</li>
-							<li class="mainmenu">
-								<a id="translateLink">
-									<span>簡体<span class="border"></span></span>
-								</a>
-							</li>
-							<li class="mainmenu">
-								<a class="tren">
-									<span>English<span class="border"></span></span>
-								</a>
+							<li>
+								<p></p>
+								<input class="testswitch-checkbox" id="onoffswitch" type="checkbox">
+								<label class="testswitch-label" for="onoffswitch">
+									<span class="testswitch-inner" data-on="DRK" data-off="LIG"></span>
+									<span class="testswitch-switch"></span>
+								</label>
 							</li>
 						</ul>
 					</div>
 				</div>
-
 			</div>
 		</nav>
-		<div id="submenu"></div>
+		<div id="submenu">
+		</div>
 	</header>
 	<!-- END .header -->
 	<script type="text/javascript">
-
-	
-
 	$(document).ready(function(){
 		$(".mainmenu").mouseenter(function(){
 			$("#submenu").find("ul").hide();
@@ -196,8 +189,7 @@
 		for (var i = 0; i < arr.length; i++) {
 			if(arr[i] == 'index.php'){
 				site = i;
-			}
-			
+			}	
 		};
 		if(site == 0){
 			document.location.href="<?=site_url('home/en/home/index')?>"
@@ -206,7 +198,6 @@
 			var x = '/'+location.pathname.split("/")[site+1]+'/'+location.pathname.split("/")[site+2];
 			document.location.href="<?=site_url('home/en')?>"+x;
 		}
-		
 	});
 	$(function() {
 		var pgurl = window.location.href;
@@ -216,3 +207,17 @@
 		})
 	});
 	</script>
+	<!--Event Controll
+	$(document).ready(function(){
+		$("#onoffswitch").on('click', function(){
+			clickSwitch()
+		});
+		var clickSwitch = function() {  
+			if ($("#onoffswitch").is(':checked')) {  
+				console.log("DRK");  
+			} else {  
+				console.log("LIG");  
+			}
+		};
+	});
+	-->
