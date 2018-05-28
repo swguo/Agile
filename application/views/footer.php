@@ -6,35 +6,66 @@
 		<div class="row">
 			<div class="col-md-2 col-sm-6">
 				<div class="fh5co-footer-widget top-level">
-					<h4 class="fh5co-footer-lead "><big><b>產品資訊</b></big></h4>
+					<h4 class="fh5co-footer-lead">關於金衣</h4>
 					<ul class="fh5co-list-check">
-						<li><a href="<?=site_url('product/index')?>">產品介紹</a></li>
-						<li><a href="<?=site_url('product/batch')?>">批次購買</a></li>
+						<li><a href="<?=site_url('about/index')?>">公司簡介</a></li>
+						<li><a href="<?=site_url('about/history')?>">發展沿革</a></li>
+						<li><a href="<?=site_url('about/organization')?>">公司組織</a></li>						
+						<li><a href="<?=site_url('about/patent')?>">得獎專利</a></li>
 					</ul>
 				</div>
 			</div>
 			<div class="col-md-2 col-sm-6">
-			<div class="fh5co-footer-widget top-level">
-				<h4 class="fh5co-footer-lead "><big><b>開發團隊</b></big></h4>
-				<ul class="fh5co-list-check">
-					<li><a href="http://ilearn2.fcu.edu.tw/user/view.php?id=71821&course=46924">郭士煒</a></li>
-					<li><a href="http://ilearn2.fcu.edu.tw/user/view.php?id=41168&course=46924">謝政倫</a></li>
-					<li><a href="http://ilearn2.fcu.edu.tw/user/view.php?id=68783&course=46924">陳伯雄</a></li>
-					<li><a href="http://ilearn2.fcu.edu.tw/user/view.php?id=86217&course=46924">吳冠瑋</a></li>
-					<li><a href="http://ilearn2.fcu.edu.tw/user/view.php?id=86217&course=46924">屠翔鈺</a></li>
-					<li><a href="http://ilearn2.fcu.edu.tw/user/view.php?id=15329&course=46924">羅士傑</a></li>
-					<li><a href="http://ilearn2.fcu.edu.tw/user/view.php?id=15332&course=46924">胡建安</a></li>
-					<li><a href="http://www.iecs.fcu.edu.tw/wSite/ct?xItem=32585d0ed8d3c313&ctNode=14823&mp=370201&submit=%E5%80%8B%E4%BA%BA%E8%B3%87%E6%96%99">許懷中</a></li>
-				</ul>
+				<div class="fh5co-footer-widget top-level">
+					<h4 class="fh5co-footer-lead">最新消息</h4>
+					<ul class="fh5co-list-check">
+						<li><a href="<?=site_url('news/index')?>">最新消息</a></li>
+						<li><a href="<?=site_url('news/history')?>">歷史消息</a></li>
+						<li><a href="<?=site_url('news/promotion')?>">產品促銷</a></li>
+						<li><a href="<?=site_url('news/active')?>">活動花絮</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-2 col-sm-6">
+				<div class="fh5co-footer-widget top-level">
+					<h4 class="fh5co-footer-lead ">產品資訊</h4>
+					<ul class="fh5co-list-check">
+						<li><a href="<?=site_url('product/index')?>">產品介紹</a></li>
+						<li><a href="<?=site_url('product/batch')?>">原料購買</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-2 col-sm-6">
+				<div class="fh5co-footer-widget top-level">
+					<h4 class="fh5co-footer-lead ">服務資訊</h4>
+					<ul class="fh5co-list-check">
+						<li><a href="<?=site_url('service/index')?>">顧客服務</a></li>
+						<li><a href="<?=site_url('service/advisory')?>">健康諮詢</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-2 col-sm-6">
+				<div class="fh5co-footer-widget top-level">
+					<h4 class="fh5co-footer-lead ">人力資源</h4>
+					<ul class="fh5co-list-check">
+						<li><a href="<?=site_url('hr/recruitment#hr1')?>">公司福利</a></li>
+						<li><a href="<?=site_url('hr/recruitment#hr2')?>">工作機會</a></li>
+						<li><a href="<?=site_url('hr/recruitment#hr3')?>">交通資訊</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-2 col-sm-6">
+				<div class="fh5co-footer-widget top-level">
+					<h4 class="fh5co-footer-lead ">聯絡我們</h4>
+					<ul class="fh5co-list-check">
+						<li><a href="<?=site_url('contact/contactme')?>">聯絡我們</a></li>
+						<li><a href="<?=site_url('contact/traffic')?>">交通資訊</a></li>
+					</ul>
+				</div>
 			</div>
 		</div>
-		</div>
+
 		
-		<div class="row fh5co-row-padded fh5co-copyright">
-			<div class="col-md-5">
-				<p>Copyright &copy; 敏捷開發</p>
-			</div>
-		</div>
 	</div>
 </footer>
 <a href="#" id="topButton"><span class="glyphicon glyphicon-arrow-up"></span></a>

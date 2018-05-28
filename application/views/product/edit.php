@@ -2,7 +2,7 @@
   <div class="col-md-8">
     <?php 
     $data = $result->result()[0];
-    print_r($data);
+    //print_r($data);
     echo form_open_multipart('product/update/'.$data->id);?>
       <div class="form-group">
         <label >產品名稱(中文)</label>
