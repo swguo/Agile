@@ -2,7 +2,11 @@
 </aside>
 <div id="fh5co-main">
 	<div class="container">
+<<<<<<< HEAD
 		<?php echo form_open(site_url('material/sentMail'),array('id' => 'cus_form'));?>
+=======
+		<?php echo form_open(site_url('product/sentMail'),array('id' => 'cus_form'));?>
+>>>>>>> origin/User7
 		<div class="row">
 			<div class="col-md-12" style="margin-top:15px;">
 				<?php

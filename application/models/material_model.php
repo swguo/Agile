@@ -55,6 +55,7 @@ class Material_model extends CI_Model {
 	}
 
 	public function get_user_list($year,$month)
+<<<<<<< HEAD
 	{
 		$start = $year.'-'.$month.'-'.'00';
 		$end = $year.'-'.($month+1).'-'.'01';
@@ -90,10 +91,18 @@ class Material_model extends CI_Model {
 		$query = $this->db->query($sql);
 
 		if(count($query)>0){
+=======
+	{
+		$start = $year.'-'.$month.'-'.'00';
+		$end = $year.'-'.($month+1).'-'.'01';
+		$query = $this->db->query('SELECT DISTINCT(name) as name FROM `orderform` where date >= "'.$start.'" AND date < "'.$end.'"');
+		if($query->result()>0){
+>>>>>>> origin/User7
 			return $query;
 		}else 
 		return FALSE;
 	}
+<<<<<<< HEAD
 	public function insert_orderForm($id,$name,$email,$phone,$address,$note)
 	{
 
@@ -138,5 +147,36 @@ class Material_model extends CI_Model {
 
 		$this->db->where('id', $id);
 		$this->db->update('product', $data); 
+=======
+	
+	public function get_year_list()
+	{
+		$query = $this->db->query('SELECT DISTINCT(date) as date FROM `orderform`');
+
+		if($query->result()>0){
+			return $query;
+		}else 
+		return FALSE;
+	}
+
+	public function get_filter_report($year,$month,$name)
+	{
+		$start = $year.'-'.$month.'-'.'00';
+		$end = $year.'-'.($month+1).'-'.'01';
+
+		$sql = 'SELECT o.name,c.product_id,SUM(product_id) as count,p.price,p.name as pname
+		FROM `orderform` as o 
+		INNER JOIN `crush_material` as c ON o.id = c.orderForm_id 
+		INNER JOIN `product` as p ON c.product_id = p.id
+		WHERE o.is_delete = 1 AND o.date >= "'.$start.'" AND o.date < "'.$end.'"
+		GROUP BY c.product_id';
+
+		$query = $this->db->query($sql);
+
+		if(count($query)>0){
+			return $query;
+		}else 
+		return FALSE;
+>>>>>>> origin/User7
 	}
 }
