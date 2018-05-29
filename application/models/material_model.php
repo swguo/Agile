@@ -49,7 +49,7 @@ class Material_model extends CI_Model {
 	}
 	public function get_material($id = "")
 	{
-		$query = $this->db->query('SELECT c.id,orderForm_id,product_id,quantity,name,price,safety_stock FROM `crush_material` as c INNER JOIN `product` as p ON c.`product_id` = p.`id` WHERE `orderForm_id` = "'.$id.'"');
+		$query = $this->db->query('SELECT c.id,orderForm_id,product_id,quantity,name,price FROM `crush_material` as c INNER JOIN `product` as p ON c.`product_id` = p.`id` WHERE `orderForm_id` = "'.$id.'"');
 
 		return $query;
 	}
