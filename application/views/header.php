@@ -75,7 +75,7 @@
 								</a>
 							</li>
 							<li class="mainmenu">
-								<a href="<?=site_url('material/index')?>">
+								<a href="<?=site_url('material/batchex')?>">
 									<span>批次購買<span class="border"></span></span>
 									<span class="triangle"></span>
 								</a>
