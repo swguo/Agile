@@ -9,7 +9,7 @@ class Material extends CI_Controller {
 		$this->load->model('product_model');		
 	}
 	
-	// 批次購買-前台
+	
 	public function index()
 	{	
 			//$this->load->view('header');
@@ -18,18 +18,33 @@ class Material extends CI_Controller {
 	}
 	public function batchex()
         {
-               $data = $this->product_model->get();
+                $data = $this->product_model->get();
                 $this->load->view('header');
                 $this->load->view('product/batchex',array('data' => $data));
                 $this->load->view('footer');
         }
-	// 批次購買-後台
+	
 	public function backIndex()
 	{		
-		$this->load->view('back_header');
-		$this->load->view('material/b_index');
+	    $filter = $this->input->post('filter','');
+	    if('' != $filter){
+	      $filter = array(
+	        'name'     => $this->input->post('name',''),
+	        'startTime'=> $this->input->post('startTime',''),
+	        'endTime'  => $this->input->post('endTime',''),
+	        'shipped'  => $this->input->post('shipped',''),
+	      );
+	      $data = $this->material_model->get_filted_order($filter);
+	    } else {
+	      $data = $this->material_model->get_orderForm();
+	    }
+	    if($data == false){
+	      $data = array();
+	    } 
+			$this->load->view('back_header');
+			$this->load->view('material/b_index',array('data' => $data, 'filter' => $filter));
 	}
-	// 寄信
+
 	public function sentMail()
 	{
 		if(isset($_POST['sentMail'])){
@@ -85,13 +100,13 @@ class Material extends CI_Controller {
 					}
 				}
 				$product_info .= "Total amount : ".$total." NT dollars<br>";
-				//寄信給客戶
+				//å¯„ä¿¡çµ¦å®¢æˆ¶
 				$msg = "Dear ".$name." :<br>Thank you for your order, we will be in contact with you soon : <br>";
 				$msg .= "Order ID : ".$order_id."<br>";
 				$msg .= "Name : ".$name."<br>";
-				$msg .= "Email：".$email."<br>";
-				$msg .= "Phone：".$phone."<br>";
-				$msg .= "Address：".$address."<br>";
+				$msg .= "Emailï¼š".$email."<br>";
+				$msg .= "Phoneï¼š".$phone."<br>";
+				$msg .= "Addressï¼š".$address."<br>";
 				$msg .= "Note : ".$note."<br><hr><br>";
 				$msg .= $product_info;
 
@@ -99,54 +114,54 @@ class Material extends CI_Controller {
 				//$this->email->from('nugen.tw@msa.hinet.net', "Nugen Bioscience(Taiwan)"); 
 				$this->email->from('pucmrdb@gmail.com', "Nugen Bioscience(Taiwan)"); 
 				$this->email->to($email);
-				$this->email->subject('【Nugen】 Purchase order #'.$order_id);
+				$this->email->subject('ã€Nugenã€‘ Purchase order #'.$order_id);
 				$this->email->message($msg); 
 				$this->email->send();
 				// echo $this->email->print_debugger();
 			}else{
 
-				$product_info="訂購明細如下 : <br>";
+				$product_info="è¨‚è³¼æ˜Žç´°å¦‚ä¸‹ : <br>";
 				foreach ($orderArray as $key => $value) {
 					if($value > 0){
-						$product_info .= $nameArray[$key]." : ".$value." kilo x 台幣 ".$priceArray[$key]." 元<br>";
+						$product_info .= $nameArray[$key]." : ".$value." kilo x å°å¹£ ".$priceArray[$key]." å…ƒ<br>";
 						$total += $priceArray[$key]*$value;
 					}
 				}
-				$product_info .= "總金額 : 台幣 ".$total." 元<br>";
-				//寄信給客戶
-				$msg = $name." 先生/小姐 您好:<br>感謝您的訂購，以下是您的訂單資訊<br>";
+				$product_info .= "ç¸½é‡‘é¡ : å°å¹£ ".$total." å…ƒ<br>";
+				//å¯„ä¿¡çµ¦å®¢æˆ¶
+				$msg = $name."先生/小姐 您好:<br>感謝您的訂購，以下是您的訂單資訊<br>";
 				$msg .= "訂單編號 : ".$order_id."<br>";
 				$msg .= "姓名 : ".$name."<br>";
-				$msg .= "Email：".$email."<br>";
+				$msg .= "Email:".$email."<br>";
 				$msg .= "電話：".$phone."<br>";
 				$msg .= "地址：".$address."<br>";
 				$msg .= "備註 : ".$note."<br><hr><br>";
 
 				$msg .= $product_info;			
-				$this->session->set_flashdata('msg', $name.'您好，謝謝您的下單。');		
-				//$this->email->from('nugen.tw@msa.hinet.net', "金衣生命科學股份公司"); 
-				$this->email->from('pucmrdb@gmail.com', "保你健康科學股份公司"); 
+				$this->session->set_flashdata('msg', $name.'æ‚¨å¥½ï¼Œè¬è¬æ‚¨çš„ä¸‹å–®ã€‚');		
+				//$this->email->from('nugen.tw@msa.hinet.net', "é‡‘è¡£ç”Ÿå‘½ç§‘å­¸è‚¡ä»½å…¬å¸"); 
+				$this->email->from('pucmrdb@gmail.com', "ä¿ä½ å¥åº·ç§‘å­¸è‚¡ä»½å…¬å¸"); 
 				$this->email->to($email);
-				$this->email->subject('【訂單確認】');
+				$this->email->subject('ã€è¨‚å–®ç¢ºèªã€‘');
 				$this->email->message($msg); 
 				$this->email->send();
 				// echo $this->email->print_debugger();
 			}
-			//寄信給行政
-			/*$msg = $name." 先生/小姐 於".date("Y-m-d",time())." 訂購了產品，訂單資訊如下<br>";
+			//å¯„ä¿¡çµ¦è¡Œæ”¿
+			/*$msg = $name."先生/小姐 於".date("Y-m-d",time())." 訂購了產品，訂單資訊如下<br>";
 			$msg .= "訂單編號 : ".$order_id."<br>";
 			$msg .= "姓名 : ".$name."<br>";
-			$msg .= "Email：".$email."<br>";
+			$msg .= "Emailï¼š".$email."<br>";
 			$msg .= "電話：".$phone."<br>";
 			$msg .= "地址：".$address."<br>";
 			$msg .= "備註 : ".$note."<br><hr><br>";
 
 			$msg .= $product_info;			
 
-			$this->email->from($email, "保你健康科學股份公司"); 
+			$this->email->from($email, "ä¿ä½ å¥åº·ç§‘å­¸è‚¡ä»½å…¬å¸"); 
 			//$this->email->to('nugen.tw@msa.hinet.net');
 			$this->email->to('creamempress@gmail.com');
-			$this->email->subject('【訂單通知】'.$name.' '.$order_id.' # '.date("Y-m-d",time()).' ');
+			$this->email->subject('ã€è¨‚å–®é€šçŸ¥ã€‘'.$name.' '.$order_id.' # '.date("Y-m-d",time()).' ');
 			$this->email->message($msg); 
 			$this->email->send();*/
 			// echo $this->email->print_debugger();
@@ -155,7 +170,12 @@ class Material extends CI_Controller {
 			$this->session->set_flashdata('message_data', 
 				array('type' => 'success', 'message' => '感謝您的下單，已寄確認信至您的信箱'));
 			redirect(site_url("material/batchex"));
-		}
-	}
-	
+		
+	}   
+	public function shipping(){
+	    $id = $this->input->post('id','');
+	    $data = $this->material_model->shipping($id);
+	    redirect('material/backIndex', 'location', 301); 
+  	}
+
 }

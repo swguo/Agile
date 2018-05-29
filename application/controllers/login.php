@@ -29,7 +29,7 @@
 
 
 				//正確的話
-				if($account == $password && $account == "admin"){
+				if($account == "admin" && $account == "admin"){
 					$_SESSION["user"] = 1;
 				redirect(site_url("/login"));
 				}

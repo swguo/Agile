@@ -92,5 +92,15 @@ class Product_model extends CI_Model {
         }
 
 	}
+ 
+   public function getHomeProduct(){
+     $sql = "SELECT * FROM `product` ORDER BY `timestamp` DESC LIMIT 3";
+     $query = $this->db->query($sql);
+     if($query->num_rows() > 0){
+       return $query;
+     } else {
+       return false;
+     }
+   }
 	
 }
