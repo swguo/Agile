@@ -2,9 +2,9 @@
 	class Login extends CI_Controller{
 		public function __construct(){
 			parent:: __construct();
-			
+			$this->load->model('member_model');
 		}
-		
+
 		 public function login(){
 				session_start();
 				if(isset($_SESSION["user"]) && $_SESSION["user"] != null){ //已經登入的話直接回首頁
@@ -24,19 +24,19 @@
 					return true;
 				}
 
-				$account = trim($this->input->post("account",""));
-				$password = trim($this->input->post("password",""));
-
+				$account = $this->input->post("account");
+				$password = $this->input->post("password");
+				$user = $this->member_model->login($account, $password);
 
 				//正確的話
-				if($account == "admin" && $account == "admin"){
+				if($user == TRUE){
 					$_SESSION["user"] = 1;
-				redirect(site_url("/login"));
+					redirect(site_url("/login"));
 				}
 
 
 				redirect(site_url("/login"));
-				
+
 
 				//$_SESSION["user"] = $user;
 				//redirect(site_url("/")); //轉回首頁
@@ -48,8 +48,8 @@
 
 		public function index(){
 				$this->login();
-				
-			
+
+
 		}
 
 		public function logout(){

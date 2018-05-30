@@ -44,15 +44,14 @@
 					<div class="wrap">
 						<p class="form-title">
 							後臺登入</p>
-						<form class="login">
-							<input type="text" placeholder="帳號" />
-							<input type="password" placeholder="密碼" />
+						<form class="login" action="<?=site_url('/login/logining')?>" method="post">
+							<input type="text" placeholder="帳號" name="account" required/>
+							<input type="password" placeholder="密碼" name="password" required/>
 							<input type="submit" value="登入" class="btn btn-success btn-sm" />
 						</form>
-					</div>   
+					</div>
 				</div>
 			</div>
 		</div>
 	</body>
 </html>
-
