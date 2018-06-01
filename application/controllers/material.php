@@ -6,15 +6,15 @@ class Material extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('material_model');
-		$this->load->model('product_model');		
+		$this->load->model('product_model');
 	}
-	
-	
+
+
 	public function index()
-	{	
-			//$this->load->view('header');
+	{
+			$this->load->view('header');
 			$this->load->view('material/index');
-			//$this->load->view('footer');		
+			$this->load->view('footer');		
 	}
 	public function batchex()
         {
@@ -45,12 +45,12 @@ class Material extends CI_Controller {
 			// id
 			$order_id =date("Ym",time()).time();
 			// total price
-			$total = 0;	
+			$total = 0;
 			//print_r($pidArray);
 			// setting
 			$this->load->library('email');
-			
-			$config['protocol'] = "smtp";			
+
+			$config['protocol'] = "smtp";
 			$config['smtp_host'] = 'ssl://smtp.gmail.com';
             $config['smtp_port'] = '465';
             $config['smtp_user'] = 'pucmrdb@gmail.com';
@@ -69,7 +69,7 @@ class Material extends CI_Controller {
 					$this->material_model->insert_material($order_id,$pidArray[$key],$value);
 				}
 			}
-			
+
 			if($this->session->userdata('lg') == "en"){
 				$product_info="Your order details : <br>";
 				foreach ($orderArray as $key => $value) {
@@ -89,12 +89,12 @@ class Material extends CI_Controller {
 				$msg .= "Note : ".$note."<br><hr><br>";
 				$msg .= $product_info;
 
-				$this->session->set_flashdata('msg', $name.' thank your ordering');		
-				//$this->email->from('nugen.tw@msa.hinet.net', "Nugen Bioscience(Taiwan)"); 
-				$this->email->from('pucmrdb@gmail.com', "Nugen Bioscience(Taiwan)"); 
+				$this->session->set_flashdata('msg', $name.' thank your ordering');
+				//$this->email->from('nugen.tw@msa.hinet.net', "Nugen Bioscience(Taiwan)");
+				$this->email->from('pucmrdb@gmail.com', "Nugen Bioscience(Taiwan)");
 				$this->email->to($email);
 				$this->email->subject('ã€Nugenã€‘ Purchase order #'.$order_id);
-				$this->email->message($msg); 
+				$this->email->message($msg);
 				$this->email->send();
 				// echo $this->email->print_debugger();
 			}else{
@@ -107,7 +107,7 @@ class Material extends CI_Controller {
 					}
 				}
 				$product_info .= "總金額 : 台幣 ".$total." 元<br>";
-			
+
 				$msg = $name."先生/小姐 您好:<br>感謝您的訂購，以下是您的訂單資訊<br>";
 				$msg .= "訂單編號 : ".$order_id."<br>";
 				$msg .= "姓名 : ".$name."<br>";
@@ -116,27 +116,27 @@ class Material extends CI_Controller {
 				$msg .= "地址：".$address."<br>";
 				$msg .= "備註 : ".$note."<br><hr><br>";
 
-				$msg .= $product_info;			
-				$this->session->set_flashdata('msg', $name.'您好，謝謝您的下單。');		
-				
-				$this->email->from('pucmrdb@gmail.com', "保你健康科學股份公司"); 
+				$msg .= $product_info;
+				$this->session->set_flashdata('msg', $name.'您好，謝謝您的下單。');
+
+				$this->email->from('pucmrdb@gmail.com', "保你健康科學股份公司");
 				$this->email->to($email);
 				$this->email->subject('【訂單確認】');
-				$this->email->message($msg); 
+				$this->email->message($msg);
 				$this->email->send();
 				// echo $this->email->print_debugger();
-			}		
+			}
 
 
-			$this->session->set_flashdata('message_data', 
+			$this->session->set_flashdata('message_data',
 				array('type' => 'success', 'message' => '感謝您的下單，已寄確認信至您的信箱'));
 			redirect(site_url("material/batchex"));
 		}
-		
-	}   
-	
+
+	}
+
 	public function backIndex()
-	{		
+	{
 	    $filter = $this->input->post('filter','');
 	    if('' != $filter){
 	      $filter = array(
@@ -151,16 +151,16 @@ class Material extends CI_Controller {
 	    }
 	    if($data == false){
 	      $data = array();
-	    } 
+	    }
 			$this->load->view('back_header');
 			$this->load->view('material/b_index',array('data' => $data, 'filter' => $filter));
 	}
 
-	
+
 	public function shipping(){
 	    $id = $this->input->post('id','');
 	    $data = $this->material_model->shipping($id);
-	    redirect('material/backIndex', 'location', 301); 
+	    redirect('material/backIndex', 'location', 301);
   	}
 
 }

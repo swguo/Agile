@@ -3,6 +3,7 @@
 		public function __construct(){
 			parent:: __construct();
 			$this->load->model('member_model');
+
 		}
 
 		 public function login(){
@@ -24,22 +25,21 @@
 					return true;
 				}
 
-				$account = $this->input->post("account");
-				$password = $this->input->post("password");
-				$user = $this->member_model->login($account, $password);
+				$account_in = trim($this->input->post("account",""));
+				$password_in = trim($this->input->post("password",""));
 
-				//正確的話
-				if($user == TRUE){
+
+				$result = $this->member_model->login($account_in,$password_in);
+				//比對正確的話登入
+				if($result){
 					$_SESSION["user"] = 1;
 					redirect(site_url("/login"));
 				}
 
-
 				redirect(site_url("/login"));
 
 
-				//$_SESSION["user"] = $user;
-				//redirect(site_url("/")); //轉回首頁
+
 			}
 
 
