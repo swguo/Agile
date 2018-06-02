@@ -109,7 +109,7 @@
 									<span>批次購買<span class="border"></span></span>
 								</a>
 							</li>
-							<li>
+							<li style="padding-top: 10px">
 								<input class="testswitch-checkbox" id="onoffswitch" type="checkbox" >
 								<label class="testswitch-label" for="onoffswitch">
 									<span class="testswitch-inner" data-on="DRK" data-off="LIG"></span>
