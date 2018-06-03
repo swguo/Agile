@@ -4,7 +4,11 @@ class Product extends CI_Controller {
 
 	public function __construct() {
 		parent:: __construct();		
-		$this->load->model('product_model');	
+		$this->load->model('product_model');
+		$this->load->library('session');
+		if($this->session->userdata('user')!="admin"){	
+				redirect(site_url("/login"));				
+		}	
 	}
 
 	// 產品介紹-前台

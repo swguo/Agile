@@ -140,4 +140,50 @@ class Material_model extends CI_Model {
 		$this->db->where('id', $id);
 		$this->db->update('product', $data); 
 	}
+	public function shipping($id,$is_delete){
+		if($is_delete==1){
+			$is_delete=0;
+		}else{
+			$is_delete=1;
+		}
+		$data = array(
+			'is_delete' => $is_delete,
+			);
+
+		$this->db->where('id', $id);
+		$this->db->update('orderform', $data); 
+
+		if($this->db->affected_rows()>0){
+			return true;
+		}else{
+			return false;
+		}
+
+	}
+	public function get_filted_order($parm){
+
+		if($parm['startTime']=="" || $parm['endTime']==""){
+			$parm['startTime']="1970-01-01";
+			$parm['endTime']= date("Y-m-d");
+		}
+
+		if($parm['shipped']==2){
+			$sql = "SELECT * FROM `orderform` WHERE name like ?
+			and `date` between ? and ?";
+			$query = $this->db->query($sql,array("%".$parm['name']."%",$parm['startTime'],$parm['endTime']));
+		}else{
+			$sql = "SELECT * FROM `orderform` WHERE name like ?
+			and `is_delete` = ?
+			and `date` between ? and ?";
+			$query = $this->db->query($sql,array("%".$parm['name']."%",$parm['shipped'],$parm['startTime'],$parm['endTime']));
+		}
+
+		if($query->num_rows()>0){
+			return $query;
+		}else{
+			return FALSE;
+		}
+
+
+	}
 }

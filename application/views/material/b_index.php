@@ -49,10 +49,11 @@
 					<td>篩選</td>
 				</tr>
 				<tr>
-					<td><input type='text' name='name' class='form-control' placeholder='訂購者姓名' value="<?=$recordValue['name']?>"></td>
-					<td><input type='datetime-local' name='startTime' class='form-control' placeholder='開始時間' value="<?=$recordValue['startTime']?>"></td>
-					<td><input type='datetime-local' name='endTime' class='form-control' placeholder='結束時間' value="<?=$recordValue['endTime']?>"></td>
-					<td><select class="form-control" name='shipped'>
+					<td><input type='text' name='name' class='form-control' required placeholder='訂購者姓名' value="<?=$recordValue['name']?>"></td>
+					<td><input type='date' name='startTime' class='form-control' required placeholder='開始時間' value="<?=$recordValue['startTime']?>"></td>
+					<td><input type='date' name='endTime' class='form-control' required placeholder='結束時間' value="<?=$recordValue['endTime']?>"></td>
+					<td>
+					<select class="form-control" name='shipped'>
 						<option value='2' <?=$selected['2']?>>全選</option>
 						<!-- 故意把出貨類型反過來，這樣只要查詢"出貨類型與filter不同"就可以直接全選了 -->
 						<option value='0' <?=$selected['0']?>>已出貨</option>
@@ -94,6 +95,7 @@
 						?>
 						<form method="post" action="./shipping" onsubmit="return confirm('確定要修改出貨狀態嗎');">
 							<input type="hidden" value="<?=$value['id']?>" name="id">
+							<input type="hidden" value="<?=$value['is_delete']?>" name="is_delete">
 							<input type="submit" class="btn btn-<?=$color?>" value="<?=$text?>">
 						</form>
 					</td>

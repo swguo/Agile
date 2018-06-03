@@ -16,7 +16,9 @@
 
 
 
-<?php foreach ($result->result() as $key=>$value){
+<?php 
+$i=0;
+foreach ($result->result() as $key=>$value){
  ?>
 
 
@@ -39,8 +41,8 @@
           <button type="button" class="btn btn-info btn-lg" data-toggle="modal"  onclick="location.href = '<?php echo$value->buyLink; ?>' ">購買連結</button>
 
 
-         <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">更多資訊</button>
-          <div class="modal fade" id="myModal" role="dialog">
+         <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target=<?="#myModal".$i?>>更多資訊</button>
+          <div class="modal fade" id=<?="myModal".$i?> role="dialog">
           <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -68,12 +70,15 @@
       </div>
       <!-- /.row -->
       <hr>
-<?php } ?>
+<?php 
+$i++;
+}
+ ?>
 
 
     <!-- Bootstrap core JavaScript -->
-    <script src="../assets/vendor/jquery/jquery.min.js"></script>
-    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"); ?> ></script>
+    <script src="../../assets/vendor/jquery/jquery.min.js"></script>
+    <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"); ?> ></script>
 
   </body>
 

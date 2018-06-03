@@ -7,6 +7,10 @@ class Material extends CI_Controller {
 		parent::__construct();
 		$this->load->model('material_model');
 		$this->load->model('product_model');
+
+		if($this->session->userdata('user')!="admin"){	
+				redirect(site_url("/login"));				
+		}
 	}
 
 
@@ -93,7 +97,7 @@ class Material extends CI_Controller {
 				//$this->email->from('nugen.tw@msa.hinet.net', "Nugen Bioscience(Taiwan)");
 				$this->email->from('pucmrdb@gmail.com', "Nugen Bioscience(Taiwan)");
 				$this->email->to($email);
-				$this->email->subject('ã€Nugenã€‘ Purchase order #'.$order_id);
+				$this->email->subject('Purchase order #'.$order_id);
 				$this->email->message($msg);
 				$this->email->send();
 				// echo $this->email->print_debugger();
@@ -134,33 +138,157 @@ class Material extends CI_Controller {
 		}
 
 	}
+	public function filter_backIndex()
+	{
+		$this->lib->adminAccess();
+		if($this->input->post("filter_btn")){
+			$filter = 0;
+			$filterString = "";
+			$sql = "select * from orderform  ";
+			if($this->input->post("filter_startTime")) {
+				if($filter == 0){
+					$sql .=  ' WHERE ';
+				}
+				$sql .= ' date > "'.$this->input->post("filter_startTime").'" ';
+				$filterString[] = "開始時間：".$this->input->post("filter_startTime");
+				$filter++;
+			}
+			if($this->input->post("filter_endTime")) {
+				if($filter == 0){
+					$sql .=  ' WHERE ';
+				}
+				if($filter > 0){
+					$sql .=  ' AND ';
+				}
+				$sql .= ' date < "'.$this->input->post("filter_endTime").'" ';
+				$filterString[] = "結束時間：".$this->input->post("filter_endTime");
+				$filter++;
+			}
+			if($this->input->post("filter_status")) {
+				if($filter == 0){
+					$sql .=  ' WHERE ';
+				}
+				if($filter > 0 && $this->input->post("filter_status") < 2){
+					$sql .=  ' AND ';
+				}
+				if($this->input->post("filter_status") == 1){
+					$sql .= ' is_delete = "1" ';
+					$filterString[] = "狀態：已出貨";
+				}else if($this->input->post("filter_status") == 0){
+					$sql .= ' is_delete = "0" ';
+					$filterString[] = "狀態：待出貨";
+				}else{
+					$filterString[] = "狀態：全部";
+				}
+				
+				$filter++;
+			}
+			if($this->input->post("filter_name")) {
+				if($filter == 0){
+					$sql .=  ' WHERE ';
+				}
+				if($filter > 0){
+					$sql .=  ' AND ';
+				}
+				$sql .= ' name LIKE "%'.$this->input->post("filter_name").'%" ';
+				$filterString[] = "名字：".$this->input->post("filter_name");
+				$filter++;
+			}
+			$query = $this->db->query($sql);
+			$data = array();
+			foreach ($query->result() as $key => $row) {
 
+				$data[$row->id]['id'] = $row->id;
+				$data[$row->id]['name'] = $row->name;
+				$data[$row->id]['email'] = $row->email;
+				$data[$row->id]['phone'] = $row->phone;
+				$data[$row->id]['address'] = $row->address;
+				$data[$row->id]['note'] = $row->note;
+				$data[$row->id]['is_delete'] = $row->is_delete;
+				$data[$row->id]['date'] = $row->date;
+				
+				$data[$row->id]['data'] = $this->material_model->get_material($row->id)->result();
+			}
+			$this->load->view('back_header');
+			$this->load->view('material/b_index',array('data' => $data,"filterString" => $filterString));
+		}
+	}
 	public function backIndex()
 	{
-	    $filter = $this->input->post('filter','');
+	    echo $filter = $this->input->post('filter','');
+	    $data = array();
 	    if('' != $filter){
-	      $filter = array(
+	      $parm = array(
 	        'name'     => $this->input->post('name',''),
 	        'startTime'=> $this->input->post('startTime',''),
 	        'endTime'  => $this->input->post('endTime',''),
 	        'shipped'  => $this->input->post('shipped',''),
 	      );
-	      $data = $this->material_model->get_filted_order($filter);
+	      $data = $this->material_model->get_filted_order($parm);
+	      //echo $this->db->last_query();
+	      //print_r($data->result());
+	      $this->load->view('back_header');
+		  $this->load->view('material/b_index',array('data' => $data,'filter'=>$filter));
 	    } else {
 	      $data = $this->material_model->get_orderForm();
+	      $this->load->view('back_header');
+		  $this->load->view('material/b_index',array('data' => $data,'filter'=>$filter));
 	    }
-	    if($data == false){
-	      $data = array();
-	    }
-			$this->load->view('back_header');
-			$this->load->view('material/b_index',array('data' => $data, 'filter' => $filter));
+	    
+		
 	}
 
 
 	public function shipping(){
 	    $id = $this->input->post('id','');
-	    $data = $this->material_model->shipping($id);
-	    redirect('material/backIndex', 'location', 301);
+	    $is_delete = $this->input->post('is_delete','');
+	    
+	    $this->material_model->shipping($id,$is_delete);
+	    $data = $this->material_model->get_orderForm($id);
+	    print_r($data);
+	    if($data!=false){
+	    	$this->session->set_flashdata('message_data',
+				array('type' => 'success', 'message' => '狀態調整成功'));
+	    	//redirect('material/backIndex', 'location', 301);
+	    		$this->load->library('email');
+
+				$config['protocol'] = "smtp";
+				$config['smtp_host'] = 'ssl://smtp.gmail.com';
+	            $config['smtp_port'] = '465';
+	            $config['smtp_user'] = 'pucmrdb@gmail.com';
+	            $config['smtp_pass'] = 'cmrdb_base@402';
+				$config['mailtype'] = 'html';
+				$config['charset'] = 'utf-8';
+				$config['newline'] = "\r\n";
+				$config['wordwrap'] = TRUE;
+				$config['crlf'] = '\r\n';
+				$this->email->initialize($config);
+			
+	    		$msg = $data[$id]['name']."先生/小姐 您好:<br>感謝您的訂購，以下是您的訂單資訊<br>";
+				$msg .= "訂單編號 : ".$id."<br>";
+				$sum=0;
+				foreach ($data[$id]['data'] as $key => $value) {
+					$msg .= "商品:".$value->name."<br>
+							 數量:".$value->quantity."<br>
+							 單價:".$value->price."<br>
+							 小計:".($value->quantity*$value->price)."<br>
+							 =============================================<br>";		
+					$sum+=($value->quantity*$value->price);			 
+				}
+				$msg.="總計:".$sum;
+				
+				$this->email->from('pucmrdb@gmail.com', "保你健康科學股份公司");
+				$this->email->to("swguo@gm.pu.edu.tw");//$data[$id]['email']);
+				$this->email->subject('【訂單送出通知】'.$id);
+				$this->email->message($msg);
+				$this->email->send();
+	    }else{
+	    	$this->session->set_flashdata('message_data',
+				array('type' => 'danger', 'message' => '狀態調整失敗'));
+	    	//redirect('material/backIndex', 'location', 301);
+	    }
+	    
   	}
+
 
 }
