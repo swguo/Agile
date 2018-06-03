@@ -1,14 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
 class Material_model extends CI_Model {
-
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->database();
 	}
-
-	//?–å??€??
+	//¨ú±o©Ò¦³
 	public function get_orderForm($id = "")
 	{
 		if($id == ""){
@@ -31,7 +28,6 @@ class Material_model extends CI_Model {
 					$data[$row->id]['data'] = $this->get_material($row->id)->result();
 				}
 			}
-
 		}else{
 			$query = $this->db->get_where('orderform', array('id' => $id))->row();
 			$data[$query->id]['id'] = $query->id;
@@ -44,16 +40,13 @@ class Material_model extends CI_Model {
 			$data[$query->id]['date'] = $query->date;
 			$data[$query->id]['data'] = $this->get_material($query->id)->result();
 		}
-
 		return $data;
 	}
 	public function get_material($id = "")
 	{
 		$query = $this->db->query('SELECT c.id,orderForm_id,product_id,quantity,name,price FROM `crush_material` as c INNER JOIN `product` as p ON c.`product_id` = p.`id` WHERE `orderForm_id` = "'.$id.'"');
-
 		return $query;
 	}
-
 	public function get_user_list($year,$month)
 	{
 		$start = $year.'-'.$month.'-'.'00';
@@ -68,36 +61,29 @@ class Material_model extends CI_Model {
 	public function get_year_list()
 	{
 		$query = $this->db->query('SELECT DISTINCT(date) as date FROM `orderform`');
-
 		if($query->result()>0){
 			return $query;
 		}else 
 		return FALSE;
 	}
-
 	public function get_filter_report($year,$month,$name)
 	{
 		$start = $year.'-'.$month.'-'.'00';
 		$end = $year.'-'.($month+1).'-'.'01';
-
 		$sql = 'SELECT o.name,c.product_id,SUM(product_id) as count,p.price,p.name as pname
 		FROM `orderform` as o 
 		INNER JOIN `crush_material` as c ON o.id = c.orderForm_id 
 		INNER JOIN `product` as p ON c.product_id = p.id
 		WHERE o.is_delete = 1 AND o.date >= "'.$start.'" AND o.date < "'.$end.'"
 		GROUP BY c.product_id';
-
 		$query = $this->db->query($sql);
-
 		if(count($query)>0){
 			return $query;
 		}else 
 		return FALSE;
 	}
-
 	public function insert_orderForm($id,$name,$email,$phone,$address,$note)
 	{
-
 		$data = array(
 			'id' => $id,
 			'name' => $name,
@@ -106,16 +92,13 @@ class Material_model extends CI_Model {
 			'address' => $address,
 			'note' => $note,
 			);
-
 		$query= $this->db->insert('orderform', $data);	
-
 		if($query == TRUE){
 			return TRUE;
 		} else{
 			return FALSE;
 		}
 	}
-
 	public function insert_material($orderForm_id,$product_id,$quantity)
 	{
 		$data = array(
@@ -123,9 +106,7 @@ class Material_model extends CI_Model {
 			'product_id' => $product_id,
 			'quantity' => $quantity,
 			);
-
 		$query= $this->db->insert('crush_material', $data);	
-
 		if($query == TRUE){
 			return TRUE;
 		} else{
@@ -136,7 +117,6 @@ class Material_model extends CI_Model {
 		$data = array(
 			'stock' => $stock,
 			);
-
 		$this->db->where('id', $id);
 		$this->db->update('product', $data); 
 	}
