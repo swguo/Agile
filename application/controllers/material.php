@@ -13,12 +13,12 @@ class Material extends CI_Controller {
       $this->load->view('footer');    
   }
   public function batchex()
-        {
-                $data = $this->product_model->get();
-                $this->load->view('header');
-                $this->load->view('product/batchex',array('data' => $data));
-                $this->load->view('footer');
-        }
+  {
+    $data = $this->product_model->get();
+    $this->load->view('header');
+    $this->load->view('product/batchex',array('data' => $data));
+    $this->load->view('footer');
+  }
     public function sentMail()
   {
     if(isset($_POST['sentMail'])){
@@ -120,6 +120,9 @@ class Material extends CI_Controller {
   }
   public function backIndex()
   {
+		if($this->session->userdata('user')!="admin"){	
+			redirect(site_url("/login"));				
+		}
     $filter = $this->input->post('filter','');
     if('' != $filter){
       $filter = array(
