@@ -60,7 +60,7 @@
 		</div>
 	</hr>
 		<hr></hr>
-		<input type="submit" value="送出" name="sentMail" class="btn success" id="sentMail_btn">
+		<input style="width:60px;margin-bottom:20px;" type="submit" value="送出" name="sentMail" class="btn success" id="sentMail_btn">
 	</form>
 </div>
 <?php $this->session->sess_destroy();?>
