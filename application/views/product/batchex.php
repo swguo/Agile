@@ -1,8 +1,8 @@
-<aside class="fh5co-page-heading">
-</aside>
-<div id="fh5co-main">
+<html lang="en">
+<body>
+	<aside class="fh5co-page-heading"></aside>
 	<div class="container">
-		<?php echo form_open(site_url('material/sentMail'),array('id' => 'cus_form'));?>
+		<?php echo form_open(site_url('product/sentMail'),array('id' => 'cus_form'));?>
 		<div class="row">
 			<div class="col-md-12" style="margin-top:15px;">
 				<?php
@@ -58,12 +58,14 @@
 				</div>
 			</div>
 		</div>
-		<hr>
-		<input type="submit" value="送出" name="sentMail" class="btn success" style="width:60px;margin-bottom:20px;border-color:#aaffcc;background-color: #66cc99;">
+	</hr>
+		<hr></hr>
+		<input type="submit" value="送出" name="sentMail" class="btn success" id="sentMail_btn">
 	</form>
 </div>
-</div>
 <?php $this->session->sess_destroy();?>
+</body>
+</html>
 <style type="text/css">
 	td{
 		padding: 5px;

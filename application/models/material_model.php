@@ -149,4 +149,28 @@ class Material_model extends CI_Model {
 		$query = $this->db->query($sql);
 		return $query;
   }
+	public function get_filted_order($filter){
+		$endTime = '' != $filter['endTime'] ? $filter['endTime'] : "9999-12-31T23:59";
+
+		$sql = "SELECT * FROM `orderform` WHERE `name` like '%{$filter['name']}%' AND `is_delete` <> '{$filter['shipped']}' AND `date` > '{$filter['startTime']}' AND `date` < '{$endTime}'";
+		$query = $this->db->query($sql);
+
+		if($query->num_rows() > 0){
+				foreach ($query->result() as $key => $row) {
+					$data[$row->id]['id'] = $row->id;
+					$data[$row->id]['name'] = $row->name;
+					$data[$row->id]['email'] = $row->email;
+					$data[$row->id]['phone'] = $row->phone;
+					$data[$row->id]['address'] = $row->address;
+					$data[$row->id]['note'] = $row->note;
+					$data[$row->id]['is_delete'] = $row->is_delete;
+					$data[$row->id]['date'] = $row->date;
+					
+					$data[$row->id]['data'] = $this->get_material($row->id)->result();
+				}			
+		  }else{
+		return false;
+		}
+		return $data;
+	}
 }

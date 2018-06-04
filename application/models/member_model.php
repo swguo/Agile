@@ -10,13 +10,14 @@ class Member_model extends CI_Model {
 
 	public function login($account, $password)
 	{
-		$where = 'account = "'.$account.'" AND password = "'.$password.'"';
-		$this->db->where($where);
+		$this->db->where('account', $account);
+		$this->db->where('password', $password);
 		$query = $this->db->get('member');
-
-		if($query->result()>0){
+		if($query->result()!=null){
 			return TRUE;
-		}else
-		return FALSE;
+		}
+		else{
+			return FALSE;
+		}
 	}
 }

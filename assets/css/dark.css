@@ -1,0 +1,35 @@
+#body {
+	background-color:rgb(50,50,50);
+}
+#fh5co-header>.navbar{
+	background:rgb(25,25,25);
+}
+.footer{
+	background:rgb(25,25,25);
+}
+span {
+	color:rgb(127,127,127);
+}
+.my-4{
+	color: rgb(200,200,200)
+}
+p {
+	color:rgb(150,150,150);
+}
+#product_name_h3{
+	color: rgb(200,200,200)
+}
+h3{
+	color: rgb(200,200,200);
+}
+.btn-info{
+    color: #fff;
+    background-color: #66cc99;
+    border-color: #77ddaa;
+}
+#cus_form>.success {
+    color: #fff;
+    background-color: #66cc99;
+    border-color: #77ddaa;
+		width:60px;margin-bottom:20px;
+}

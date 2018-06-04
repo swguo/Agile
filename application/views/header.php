@@ -25,17 +25,53 @@
 	<link rel="stylesheet" href="<?=base_url('assets/css/font.css')?>">
 	<link rel="stylesheet" href="<?=base_url('assets/css/customer.css')?>">
 
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="<?=base_url("assets/js/tinymce/tinymce.min.js")?>"></script>
 	<!--Switch Button-->
 	<link rel="stylesheet" href="<?=base_url('assets/css/switchbutton.css')?>">
-
+	<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+	<script type="text/javascript">
+		function getCookie(cname) {
+			var name = cname + "=";
+			var decodedCookie = decodeURIComponent(document.cookie);
+			var ca = decodedCookie.split(';');
+			for(var i = 0; i < ca.length; i++) {
+					var c = ca[i];
+					while (c.charAt(0) == ' ') {
+							c = c.substring(1);
+					}
+					if (c.indexOf(name) == 0) {
+							return c.substring(name.length, c.length);
+					}
+			}
+			return "";
+		}
+		function setCookie(cname,cvalue,exdays) {
+			var d = new Date();
+			d.setTime(d.getTime() + (exdays*24*60*60*1000));
+			var expires = "expires=" + d.toGMTString();
+			document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+		}
+		//setCookie("color", "dark", 1);
+		var test = getCookie("color");
+		if(test == "dark"){
+			var head = document.getElementsByTagName('head')[0];
+			var style = document.createElement('link');
+			style.href = '<?=base_url('assets/css/dark.css')?>';
+			style.type = 'text/css';
+			style.rel = 'stylesheet';
+			head.appendChild(style);
+		}
+		check();
+	</script>
 </head>
-<body>
+<body id="body">
+
 	<header id="fh5co-header" role="banner">
 		<!-- mobile -->
 		<nav class="navbar navbar-default" role="navigation" id="mobile_nav">
 			<div class="container-fluid">
-				<div class="navbar-header"> 
+				<div class="navbar-header">
 					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle" data-toggle="collapse" data-target="#fh5co-navbar" aria-expanded="false" aria-controls="navbar"><i></i></a>
 					<a class="navbar-brand" href="<?=site_url('home/index')?>"><img src="<?=base_url('assets/images/logo.png')?>"  style="margin-top:-5px;width:90px" /></a>
 				</div>
@@ -51,8 +87,6 @@
 								<span>批次購買<span class="border"></span></span>
 							</a>
 						</li>
-						<li>
-						</li>
 					</ul>
 				</div>
 			</div>
@@ -60,7 +94,7 @@
 		<nav class="navbar navbar-default" role="navigation" id="web_nav">
 			<div class="container-fluid">
 				<div class="container">
-					<div class="navbar-header"> 
+					<div class="navbar-header">
 						<!-- Mobile Toggle Menu Button -->
 						<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle" data-toggle="collapse" data-target="#fh5co-navbar" aria-expanded="false" aria-controls="navbar"><i></i></a>
 						<a class="navbar-brand" href="<?=site_url('home/index')?>"><img src="<?=base_url('assets/images/logo.png')?>"  style="margin-top:-5px;margin-left:-20px;width:90px" /></a>
@@ -69,20 +103,16 @@
 						<ul class="nav navbar-nav navbar-right">
 							<li class="mainmenu">
 								<a href="<?=site_url('product/index')?>">
-
 									<span>產品介紹<span class="border"></span></span>
-									<span class="triangle"></span>
 								</a>
 							</li>
 							<li class="mainmenu">
 								<a href="<?=site_url('material/batchex')?>">
 									<span>批次購買<span class="border"></span></span>
-									<span class="triangle"></span>
 								</a>
 							</li>
-							<li>
-								<p></p>
-								<input class="testswitch-checkbox" id="onoffswitch" type="checkbox">
+							<li style="padding-top: 10px">
+								<input class="testswitch-checkbox" id="onoffswitch" type="checkbox" >
 								<label class="testswitch-label" for="onoffswitch">
 									<span class="testswitch-inner" data-on="DRK" data-off="LIG"></span>
 									<span class="testswitch-switch"></span>
@@ -120,7 +150,7 @@
 		for (var i = 0; i < arr.length; i++) {
 			if(arr[i] == 'index.php'){
 				site = i;
-			}	
+			}
 		};
 		if(site == 0){
 			document.location.href="<?=site_url('home/en/home/index')?>"
@@ -136,5 +166,23 @@
 			if($(this).attr("href") == pgurl || $(this).attr("href") == '' )
 				$(this).parent().addClass("active");
 		})
+	});
+	if(getCookie("color") == "dark"){
+		document.getElementById("onoffswitch").checked = true;
+	}
+	$(document).ready(function() {
+		$("#onoffswitch").on('click', function(){
+			clickSwitch()
+		});
+
+		var clickSwitch = function() {
+			if ($("#onoffswitch").is(':checked')) {
+				setCookie("color", "dark", 1);
+			}
+			else {
+				setCookie("color", "white", 1);
+			}
+			window.location.reload();
+		};
 	});
 	</script>
