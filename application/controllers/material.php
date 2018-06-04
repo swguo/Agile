@@ -8,9 +8,7 @@ class Material extends CI_Controller {
 		$this->load->model('material_model');
 		$this->load->model('product_model');
 
-		if($this->session->userdata('user')!="admin"){	
-				redirect(site_url("/login"));				
-		}
+		
 	}
 
 
@@ -22,6 +20,9 @@ class Material extends CI_Controller {
 	}
 	public function batchex()
         {
+        	if($this->session->userdata('user')!="admin"){	
+				redirect(site_url("/login"));				
+			}
                 $data = $this->product_model->get();
                 $this->load->view('header');
                 $this->load->view('product/batchex',array('data' => $data));
