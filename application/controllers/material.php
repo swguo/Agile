@@ -10,8 +10,6 @@ class Material extends CI_Controller {
 
 		
 	}
-
-
 	public function index()
 	{
 			$this->load->view('header');
@@ -20,9 +18,7 @@ class Material extends CI_Controller {
 	}
 	public function batchex()
         {
-        	if($this->session->userdata('user')!="admin"){	
-				redirect(site_url("/login"));				
-			}
+        	
                 $data = $this->product_model->get();
                 $this->load->view('header');
                 $this->load->view('product/batchex',array('data' => $data));
@@ -216,6 +212,9 @@ class Material extends CI_Controller {
 	}
 	public function backIndex()
 	{
+		if($this->session->userdata('user')!="admin"){	
+				redirect(site_url("/login"));				
+			}
 	    echo $filter = $this->input->post('filter','');
 	    $data = array();
 	    if('' != $filter){
