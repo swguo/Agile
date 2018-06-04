@@ -30,11 +30,11 @@
 	</div>
 	<div id="navbar" class="navbar-collapse collapse">
 		<?php
-		if($this->session->userdata('account')){
+		if($this->session->userdata('user')){
 			?>
-			<form class="navbar-form navbar-right" style="margin-right:5px;" action="<?=site_url('home/logout')?>" method="post">
+			<form class="navbar-form navbar-right" style="margin-right:5px;" action="<?=site_url('./login/logout')?>" method="post">
 				<div class="form-group" id="hello">
-					<a>Hello, <?=$this->session->userdata('account')?></a>
+					<a>Hello, <?=$this->session->userdata('user')?></a>
 				</div>
 				<input type="submit" class="btn btn-primary" name="logoutBtn" value="登出">
 			</form>
@@ -49,16 +49,9 @@
 		<div class="row">
 			<div class="col-sm-3 col-md-2" style="margin-top:20px;">
 				<ul class="nav nav-pills nav-stacked">
-					<li><a href="<?=site_url('home/b_index')?>">首頁</a></li>
-					<li><a href="<?=site_url('member/backIndex')?>">會員管理</a></li>
-					<li><a href="<?=site_url('news/backIndex')?>">新聞管理</a></li>
-					<li><a href="<?=site_url('contact/backIndex')?>">連絡我們管理</a></li>
-					<li><a href="<?=site_url('hr/backIndex')?>">工作機會管理</a></li>
+					<li><a href="<?=site_url('home/index')?>">首頁</a></li>					
 					<li><a href="<?=site_url('product/backIndex')?>">產品管理</a></li>
 					<li><a href="<?=site_url('material/backIndex')?>">原料管理</a></li>
-					<li><a href="<?=site_url('material/report')?>">列印報表</a></li>
-					<li><a href="<?=site_url('about/backIndex')?>">發展沿革</a></li>
-					<li><a href="<?=site_url('photo/backIndex')?>">活動花絮</a></li>
 				</ul>
 			</div>
 

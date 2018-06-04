@@ -4,7 +4,9 @@ class Product extends CI_Controller {
 
 	public function __construct() {
 		parent:: __construct();		
-		$this->load->model('product_model');	
+		$this->load->model('product_model');
+		$this->load->library('session');
+			
 	}
 
 	// 產品介紹-前台
@@ -16,6 +18,9 @@ class Product extends CI_Controller {
 	}
 	public function backIndex()
 	{		
+		if($this->session->userdata('user')!="admin"){	
+				redirect(site_url("/login"));				
+		}
 		$result = $this->product_model->getbackend();
 		$this->load->view('back_header');
 		$this->load->view('product/b_index',array("result"=>$result));
