@@ -15,7 +15,7 @@
 					<p style="font-size:20px">
 						<a href="<?=site_url('product/index')?>">產品介紹</a>
 						, 
-						<a href="<?=site_url('material/index')?>">批次購買</a>
+						<a href="<?=site_url('material/batchex')?>">批次購買</a>
 					</p>
 				</div>
 			</div>
