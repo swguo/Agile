@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  
+
   <body>
     <aside class="fh5co-page-heading"></aside>
 
@@ -16,7 +16,7 @@
 
 
 
-<?php 
+<?php
 $i=0;
 foreach ($result->result() as $key=>$value){
  ?>
@@ -28,7 +28,7 @@ foreach ($result->result() as $key=>$value){
       <div class="row">
         <div class="col-md-7">
           <a href="#">
-            <img class="img-fluid rounded mb-3 mb-md-0" src=<?=base_url($value->img) ?> width="640px" alt="">
+            <img class="img-fluid rounded mb-3 mb-md-0" src=<?=base_url($value->img) ?> width="640px" height="400px" alt="">
           </a>
         </div>
 
@@ -70,7 +70,7 @@ foreach ($result->result() as $key=>$value){
       </div>
       <!-- /.row -->
       <hr>
-<?php 
+<?php
 $i++;
 }
  ?>

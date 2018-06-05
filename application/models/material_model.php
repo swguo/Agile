@@ -7,8 +7,38 @@ class Material_model extends CI_Model {
 		parent::__construct();
 		$this->load->database();
 	}
-
-	//?–å??€??
+	public function insert_orderForm($id,$name,$email,$phone,$address,$note)
+	{
+		$data = array(
+			'id' => $id,
+			'name' => $name,
+			'email' => $email,
+			'phone' => $phone,
+			'address' => $address,
+			'note' => $note,
+			);
+		$query= $this->db->insert('orderform', $data);	
+		if($query == TRUE){
+			return TRUE;
+		} else{
+			return FALSE;
+		}
+	}
+	public function insert_material($orderForm_id,$product_id,$quantity)
+	{
+		$data = array(
+			'orderForm_id' => $orderForm_id,
+			'product_id' => $product_id,
+			'quantity' => $quantity,
+			);
+		$query= $this->db->insert('crush_material', $data);	
+		if($query == TRUE){
+			return TRUE;
+		} else{
+			return FALSE;
+		}
+	}
+//?–å??€??
 	public function get_orderForm($id = "")
 	{
 		if($id == ""){

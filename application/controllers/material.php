@@ -19,7 +19,7 @@ class Material extends CI_Controller {
     $this->load->view('product/batchex',array('data' => $data));
     $this->load->view('footer');
   }
-    public function sentMail()
+  public function sentMail()
   {
     if(isset($_POST['sentMail'])){
       $name = $this->input->post('name');
@@ -27,34 +27,27 @@ class Material extends CI_Controller {
       $phone = $this->input->post('phone');
       $address = $this->input->post('address');
       $note = $this->input->post('note');
-      // id
       $pidArray = $_POST["pid"];
-      // quantity
       $orderArray = $_POST["order"];
-      // name
       $nameArray = $_POST["name_tw"];
-      // english name
       $nameArray_en = $_POST["name_en"];
-      // price
       $priceArray = $_POST["price"];
-      // id
-      $order_id =date("Ym",time()).time();
-      // total price
-      $total = 0;
-      //print_r($pidArray);
-      // setting
+      $order_id =date("Ym",time()).time();      
+      $total = 0;      
       $this->load->library('email');
+
       $config['protocol'] = "smtp";
       $config['smtp_host'] = 'ssl://smtp.gmail.com';
-            $config['smtp_port'] = '465';
-            $config['smtp_user'] = 'pucmrdb@gmail.com';
-            $config['smtp_pass'] = 'cmrdb_base@402';
+      $config['smtp_port'] = '465';
+      $config['smtp_user'] = 'pucmrdb@gmail.com';
+      $config['smtp_pass'] = 'cmrdb_base@402';
       $config['mailtype'] = 'html';
       $config['charset'] = 'utf-8';
       $config['newline'] = "\r\n";
       $config['wordwrap'] = TRUE;
       $config['crlf'] = '\r\n';
       $this->email->initialize($config);
+
       // save
       $this->material_model->insert_orderForm($order_id,$name,$email,$phone,$address,$note);
       foreach ($orderArray as $key => $value) {
@@ -62,6 +55,7 @@ class Material extends CI_Controller {
           $this->material_model->insert_material($order_id,$pidArray[$key],$value);
         }
       }
+
       if($this->session->userdata('lg') == "en"){
         $product_info="Your order details : <br>";
         foreach ($orderArray as $key => $value) {
@@ -71,7 +65,6 @@ class Material extends CI_Controller {
           }
         }
         $product_info .= "Total amount : ".$total." NT dollars<br>";
-        //a¡Â?a?!c£g|aR¢Fa??
         $msg = "Dear ".$name." :<br>Thank you for your order, we will be in contact with you soon : <br>";
         $msg .= "Order ID : ".$order_id."<br>";
         $msg .= "Name : ".$name."<br>";
@@ -80,43 +73,46 @@ class Material extends CI_Controller {
         $msg .= "Address :".$address."<br>";
         $msg .= "Note : ".$note."<br><hr><br>";
         $msg .= $product_info;
+
         $this->session->set_flashdata('msg', $name.' thank your ordering');
-        //$this->email->from('nugen.tw@msa.hinet.net', "Nugen Bioscience(Taiwan)");
         $this->email->from('pucmrdb@gmail.com', "Nugen Bioscience(Taiwan)");
         $this->email->to($email);
-        $this->email->subject('a£á?Nugena£á¡¥ Purchase order #'.$order_id);
+        $this->email->subject('Purchase order #'.$order_id);
         $this->email->message($msg);
         $this->email->send();
-        // echo $this->email->print_debugger();
       }else{
-        $product_info="­qÁÊ©ú²Ó¦p¤U : <br>";
+
+        $product_info="è¨‚è³¼æ˜ç´°å¦‚ä¸‹ : <br>";
         foreach ($orderArray as $key => $value) {
           if($value > 0){
-            $product_info .= $nameArray[$key]." : ".$value." kilo  kilo x ¥x¹ô ".$priceArray[$key]." ¤¸<br>";
+            $product_info .= $nameArray[$key]." : ".$value." kilo  kilo x å°å¹£ ".$priceArray[$key]." å…ƒ<br>";
             $total += $priceArray[$key]*$value;
           }
         }
-        $product_info .= "Á`ª÷ÃB : ¥x¹ô ".$total." ¤¸<br>";
-        $msg = $name."¥ı¥Í/¤p©j ±z¦n:<br>·PÁÂ±zªº­qÁÊ¡A¥H¤U¬O±zªº­q³æ¸ê°T<br>";
-        $msg .= "­q³æ½s¸¹ : ".$order_id."<br>";
-        $msg .= "©m¦W : ".$name."<br>";
+        $product_info .= "ç¸½é‡‘é¡ : å°å¹£ ".$total." å…ƒ<br>";
+
+        $msg = $name."å…ˆç”Ÿ/å°å§ æ‚¨å¥½:<br>æ„Ÿè¬æ‚¨çš„è¨‚è³¼ï¼Œä»¥ä¸‹æ˜¯æ‚¨çš„è¨‚å–®è³‡è¨Š<br>";
+        $msg .= "è¨‚å–®ç·¨è™Ÿ : ".$order_id."<br>";
+        $msg .= "å§“å : ".$name."<br>";
         $msg .= "Email:".$email."<br>";
-        $msg .= "¹q¸Ü¡G".$phone."<br>";
-        $msg .= "¦a§}¡G".$address."<br>";
-        $msg .= "³Æµù : ".$note."<br><hr><br>";
+        $msg .= "é›»è©±ï¼š".$phone."<br>";
+        $msg .= "åœ°å€ï¼š".$address."<br>";
+        $msg .= "å‚™è¨» : ".$note."<br><hr><br>";
+
         $msg .= $product_info;
-        $this->session->set_flashdata('msg', $name.'±z¦n¡AÁÂÁÂ±zªº¤U³æ¡C');
-        $this->email->from('pucmrdb@gmail.com', "«O§A°·±d¬ì¾ÇªÑ¥÷¤½¥q");
+        $this->session->set_flashdata('msg', $name.'æ‚¨å¥½ï¼Œè¬è¬æ‚¨çš„ä¸‹å–®ã€‚');
+
+        $this->email->from('pucmrdb@gmail.com', "ä¿ä½ å¥åº·ç§‘å­¸è‚¡ä»½å…¬å¸");
         $this->email->to($email);
-        $this->email->subject('¡i­q³æ½T»{¡j');
+        $this->email->subject('ã€è¨‚å–®ç¢ºèªã€‘');
         $this->email->message($msg);
         $this->email->send();
-        // echo $this->email->print_debugger();
       }
       $this->session->set_flashdata('message_data',
-        array('type' => 'success', 'message' => '·PÁÂ±zªº¤U³æ¡A¤w±H½T»{«H¦Ü±zªº«H½c'));
+        array('type' => 'success', 'message' => 'æ„Ÿè¬æ‚¨çš„ä¸‹å–®ï¼Œå·²å¯„ç¢ºèªä¿¡è‡³æ‚¨çš„ä¿¡ç®±'));
       redirect(site_url("material/batchex"));
     }
+
   }
   public function backIndex()
   {
@@ -142,8 +138,65 @@ class Material extends CI_Controller {
     $this->load->view('material/b_index',array('data' => $data, 'filter' => $filter));
   }
   public function shipping(){
-      $id = $this->input->post('id','');
-      $data = $this->material_model->shipping($id);
+     $id = $this->input->post('id','');
+     $is_delete = $this->input->post('is_delete','');
+     $data = $this->material_model->get_orderForm($id);
+
+        $this->load->library('email');
+
+        $config['protocol'] = "smtp";
+        $config['smtp_host'] = 'ssl://smtp.gmail.com';
+        $config['smtp_port'] = '465';
+        $config['smtp_user'] = 'pucmrdb@gmail.com';
+        $config['smtp_pass'] = 'cmrdb_base@402';
+        $config['mailtype'] = 'html';
+        $config['charset'] = 'utf-8';
+        $config['newline'] = "\r\n";
+        $config['wordwrap'] = TRUE;
+        $config['crlf'] = '\r\n';
+        $this->email->initialize($config);
+
+      if($is_delete==0){       
+        
+        $this->email->subject('ã€è¨‚å–®å‡ºè²¨é€šçŸ¥ã€‘'.$id);
+        $msg = $data[$id]['name']."å…ˆç”Ÿ/å°å§ æ‚¨å¥½:<br>æ„Ÿè¬æ‚¨çš„è¨‚è³¼ï¼Œä»¥ä¸‹æ˜¯æ‚¨çš„è¨‚å–®è³‡è¨Š<br>";
+        $msg .= "è¨‚å–®ç·¨è™Ÿ : ".$id."<br>";
+        $sum=0;
+        foreach ($data[$id]['data'] as $key => $value) {
+          $msg .= "å•†å“:".$value->name."<br>
+               æ•¸é‡:".$value->quantity."<br>
+               å–®åƒ¹:".$value->price."<br>
+               å°è¨ˆ:".($value->quantity*$value->price)."<br>
+               =============================================<br>";    
+          $sum+=($value->quantity*$value->price);      
+        }
+        $msg.="ç¸½è¨ˆ:".$sum;
+        
+        
+      }else{
+        
+        $this->email->subject('ã€è¨‚å–®å–æ¶ˆé€šçŸ¥ã€‘'.$id);
+        $msg = $data[$id]['name']."å…ˆç”Ÿ/å°å§ æ‚¨å¥½:<br>æ‚¨çš„è¨‚å–®å·²å–æ¶ˆé€è²¨<br>";
+        $msg .= "è¨‚å–®ç·¨è™Ÿ : ".$id."<br>";
+        $sum=0;
+        foreach ($data[$id]['data'] as $key => $value) {
+          $msg .= "å•†å“:".$value->name."<br>
+               æ•¸é‡:".$value->quantity."<br>
+               å–®åƒ¹:".$value->price."<br>
+               å°è¨ˆ:".($value->quantity*$value->price)."<br>
+               =============================================<br>";    
+          $sum+=($value->quantity*$value->price);      
+        }
+        $msg.="ç¸½è¨ˆ:".$sum;
+      }
+
+      $this->email->from('pucmrdb@gmail.com', "ä¿ä½ å¥åº·ç§‘å­¸è‚¡ä»½å…¬å¸");
+        $this->email->to($data[$id]['email']);
+        
+        $this->email->message($msg);
+        $this->email->send();
+
+      $this->material_model->shipping($id);
       redirect('material/backIndex', 'location', 301);
     }
 }

@@ -94,6 +94,7 @@
 						?>
 						<form method="post" action="./shipping" onsubmit="return confirm('確定要修改出貨狀態嗎');">
 							<input type="hidden" value="<?=$value['id']?>" name="id">
+							<input type="hidden" value="<?=$value['is_delete']?>" name="is_delete">
 							<input type="submit" class="btn btn-<?=$color?>" value="<?=$text?>">
 						</form>
 					</td>

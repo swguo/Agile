@@ -16,15 +16,15 @@
     <!-- Wrapper for slides -->
 
     <div class="carousel-inner" style="margin-top: 100px; margin-bottom: 50px;">
-      <div class="item active">
+      <div class="item active" style="height:650px; width:1200px;">
         <img src="<?php echo base_url($array[0]->img)?>" alt="error" style="width:100%;">
       </div>
 
-      <div class="item">
+      <div class="item" style="height:650px; width:1200px;">
         <img src="<?php echo base_url($array[1]->img)?>" alt="error" style="width:100%;">
       </div>
 
-      <div class="item">
+      <div class="item" style="height:650px; width:1200px;">
         <img src="<?php echo base_url($array[2]->img)?>" alt="error" style="width:100%;">
       </div>
     </div>
